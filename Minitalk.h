@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 21:40:29 by mboughra          #+#    #+#             */
-/*   Updated: 2024/03/26 18:24:44 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/03/27 18:04:29 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,6 @@ typedef struct s_struct
 	char			*av2;
 	char			*converted;
 }	t_struct;
-
-typedef struct s_server
-{
-	int	byte;
-	int	bit_count;
-	int	pid;
-}	t_server;
 
 int	ft_printf(const char *str, ...);
 int	ft_putchar(char c);

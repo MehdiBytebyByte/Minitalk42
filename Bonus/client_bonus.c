@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 21:08:06 by mboughra          #+#    #+#             */
-/*   Updated: 2024/03/26 21:48:55 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/03/27 23:39:15 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ size_t	ft_atoi(char *str)
 	i = 0;
 	if (!str)
 		return (-1);
-	while (str[i] >= '0' && str[i] <= '9')
+	while (str[i])
 	{
 		r = (r * 10) + (str[i] - 48);
 		i++;
 	}
-	if (r == 0)
+	if (r <= 0 || r > 99999)
 		return (-1);
 	return (r);
 }
@@ -65,7 +65,7 @@ t_struct	init(t_struct a)
 	return (a);
 }
 
-void	ft_sendsignal(t_struct a)
+int	ft_sendsignal(t_struct a)
 {
 	int	i;
 	int	j;
@@ -75,25 +75,28 @@ void	ft_sendsignal(t_struct a)
 	{
 		a = init(a);
 		a.converted = convert(a.av2[i], a.table);
+		printf("%s\n",a.converted);
 		j = 0;
 		while (j < 8)
 		{
 			if (a.converted[j] == '1')
-				kill(a.pid, SIGUSR2);
+				if (!(kill(a.pid, SIGUSR2)))
+					return(-1);
 			if (a.converted[j] == '0')
-				kill(a.pid, SIGUSR1);
+				if (!(kill(a.pid, SIGUSR1)))
+					return(-1);
 			j++;
-			usleep(2000);
+			usleep(900);
 		}
 		i++;
 	}
+	return (0);
 }
 
 int	main(int argc, char *argv[])
 {
 	t_struct	a;
 
-	ft_printf("my pid -->%d\n", getpid());
 	a.av2 = argv[2];
 	if (argc != 3)
 	{
@@ -106,6 +109,7 @@ int	main(int argc, char *argv[])
 		printf("Invalid pid \n");
 		exit(EXIT_FAILURE);
 	}
-	ft_sendsignal(a);
+	if(!ft_sendsignal(a))
+		ft_printf("Pid wrong or Kill function failled");
 	return (0);
 }

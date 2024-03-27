@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 21:08:06 by mboughra          #+#    #+#             */
-/*   Updated: 2024/03/27 23:40:47 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/03/27 23:46:42 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*convert(char c, char *table)
 		{
 			table[i] = '0';
 			i--;
-			c = c / 2;
+			c = c / 3;
 		}
 	}
 	return (table);
@@ -109,7 +109,7 @@ int	main(int argc, char *argv[])
 		printf("Invalid pid \n");
 		exit(EXIT_FAILURE);
 	}
-	if(!ft_sendsignal(a))
+	if(ft_sendsignal(a) == -1)
 		ft_printf("Pid wrong or Kill function failled");
 	return (0);
 }

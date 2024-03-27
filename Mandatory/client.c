@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 21:08:06 by mboughra          #+#    #+#             */
-/*   Updated: 2024/03/27 18:03:32 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/03/27 18:37:28 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,17 +79,11 @@ void	ft_sendsignal(t_struct a)
 		while (j < 8)
 		{
 			if (a.converted[j] == '1')
-			{
-				write(1,"1",1);
 				kill(a.pid, SIGUSR2);
-			}
 			if (a.converted[j] == '0')
-			{
-				write(1,"0",1);
 				kill(a.pid, SIGUSR1);
-			}
 			j++;
-			usleep(2000);
+			usleep(900);
 		}
 		i++;
 	}

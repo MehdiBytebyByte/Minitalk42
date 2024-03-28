@@ -6,15 +6,15 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:45:04 by mboughra          #+#    #+#             */
-/*   Updated: 2024/03/28 06:31:52 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:11:16 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Minitalk.h"
 
-void reset(unsigned char *str, int *i, int *j, int *expected)
+void	resetb(unsigned char *str, int *i, int *j, int *expected)
 {
-	int r;
+	int	r;
 
 	r = 0;
 	*i = 0;
@@ -26,44 +26,46 @@ void reset(unsigned char *str, int *i, int *j, int *expected)
 	}
 }
 
-int check(unsigned char byte)
+int	check(unsigned char byte)
 {
 	if (byte >= 240)
-		return(32);
+		return (32);
 	else if (byte >= 224)
-		return(24);
+		return (24);
 	else if (byte >= 192)
-		return(16);
+		return (16);
 	else
 		return (8);
 }
-void iprint(unsigned char *str, int *expected, int *i, int *j)
-{
-	int r;
-	int bytelen = *expected / 8;
 
+void	iprint(unsigned char *str, int *expected, int *i, int *j)
+{
+	int	r;
+	int	bytelen;
+
+	bytelen = *expected / 8;
 	r = 0;
 	while (r < bytelen)
 	{
-		ft_printf("%c",str[r]);
+		ft_printf("%c", str[r]);
 		r++;
 	}
-	reset(str, i, j, expected);
+	resetb(str, i, j, expected);
 }
 
 void	deepersighandle(int signum, siginfo_t *info, void *ptr)
 {
 	static int				pid;
 	static unsigned char	byte[4];
-	static int 				i;
+	static int				i;
 	static int				j;
 	static int				expected;
-	
+
 	(void)*ptr;
 	if (pid != info->si_pid)
 	{
 		pid = info->si_pid;
-		reset(byte, &i, &j, &expected);
+		resetb(byte, &i, &j, &expected);
 	}
 	byte[j] = (byte[j] << 1) | (signum - SIGUSR1);
 	i++;
@@ -72,10 +74,10 @@ void	deepersighandle(int signum, siginfo_t *info, void *ptr)
 		i = 0;
 		if (j == 0)
 			expected = check(byte[0]);
-		j++;	
+		j++;
 	}
 	if ((8 * j + i) == expected)
-        iprint(byte, &expected, &i, &j);
+		iprint(byte, &expected, &i, &j);
 	kill(info->si_pid, SIGUSR2);
 }
 

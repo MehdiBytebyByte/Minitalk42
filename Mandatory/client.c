@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 21:08:06 by mboughra          #+#    #+#             */
-/*   Updated: 2024/03/28 03:18:41 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:06:32 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*convert(char c, char *table)
 		{
 			table[i] = '0';
 			i--;
-			c = c / 3;
+			c = c / 2;
 		}
 	}
 	return (table);
@@ -75,16 +75,15 @@ int	ft_sendsignal(t_struct a)
 	{
 		a = init(a);
 		a.converted = convert(a.av2[i], a.table);
-		printf("%s\n",a.converted);
 		j = 0;
 		while (j < 8)
 		{
 			if (a.converted[j] == '1')
 				if ((kill(a.pid, SIGUSR2)) == -1)
-					return(-1);
+					return (-1);
 			if (a.converted[j] == '0')
 				if ((kill(a.pid, SIGUSR1)) == -1)
-					return(-1);
+					return (-1);
 			j++;
 			usleep(900);
 		}
@@ -100,16 +99,16 @@ int	main(int argc, char *argv[])
 	a.av2 = argv[2];
 	if (argc != 3)
 	{
-		printf("Please Enter 3 arguments");
+		ft_printf("Please Enter 3 arguments");
 		exit(EXIT_FAILURE);
 	}
 	a.pid = ft_atoi(argv[1]);
 	if (a.pid == -1)
 	{
-		printf("Invalid pid \n");
+		ft_printf("Invalid pid \n");
 		exit(EXIT_FAILURE);
 	}
-	if(ft_sendsignal(a) == -1)
+	if (ft_sendsignal(a) == -1)
 		ft_printf("Pid wrong or Kill function failled");
 	return (0);
 }

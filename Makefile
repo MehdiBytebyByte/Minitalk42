@@ -6,19 +6,12 @@
 #    By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/18 21:42:38 by mboughra          #+#    #+#              #
-#    Updated: 2024/03/28 06:30:41 by mboughra         ###   ########.fr        #
+#    Updated: 2024/03/28 15:53:01 by mboughra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-
-SRC = Mandatory/server.c Mandatory/client.c tools/ft_printf.c \
-tools/ft_hexafunctions.c tools/ft_putfunctions.c
-
-BSRC = Bonus/server.c Bonus/client.c tools/ft_printf.c \
-tools/ft_hexafunctions.c tools/ft_putfunctions.c
-
 RM = rm -rf
 
 all: server client
@@ -39,7 +32,7 @@ client: Mandatory/client.c tools/ft_printf.c tools/ft_hexafunctions.c \
 client_bonus: Bonus/client_bonus.c tools/ft_printf.c tools/ft_hexafunctions.c \
 		tools/ft_putfunctions.c Minitalk.h
 	$(CC) -o $@ Bonus/client_bonus.c tools/ft_printf.c tools/ft_hexafunctions.c \
-		tools/ft_putfunctions.c $(CFLAGS)
+		tools/ft_putfunctions.c tools/recieved.c $(CFLAGS)
 		
 server_bonus: Bonus/server_bonus.c tools/ft_printf.c tools/ft_hexafunctions.c \
 		tools/ft_putfunctions.c Minitalk.h

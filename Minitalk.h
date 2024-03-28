@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 21:40:29 by mboughra          #+#    #+#             */
-/*   Updated: 2024/03/27 23:38:28 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/03/28 03:02:23 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <string.h> 
+# include <string.h>
+# include <limits.h>
 
 typedef struct s_struct
 {
-	unsigned int	pid;
+	pid_t	pid;
 	char			table[9];
 	char			*av2;
 	char			*converted;

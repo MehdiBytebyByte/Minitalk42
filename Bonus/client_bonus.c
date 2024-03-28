@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 21:08:06 by mboughra          #+#    #+#             */
-/*   Updated: 2024/03/27 23:39:15 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/03/28 00:37:42 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,14 @@ char	*convert(char c, char *table)
 	int	i;
 
 	i = 7;
-	while (c != 0)
+	while (i >= 0)
 	{
 		if (c % 2 != 0)
-		{
 			table[i] = '1';
-			i--;
-			c = c / 2;
-		}
 		else
-		{
 			table[i] = '0';
-			i--;
-			c = c / 2;
-		}
+		c = (c >> 1);
+		i--;
 	}
 	return (table);
 }
@@ -80,10 +74,10 @@ int	ft_sendsignal(t_struct a)
 		while (j < 8)
 		{
 			if (a.converted[j] == '1')
-				if (!(kill(a.pid, SIGUSR2)))
+				if ((kill(a.pid, SIGUSR2)) == -1)
 					return(-1);
 			if (a.converted[j] == '0')
-				if (!(kill(a.pid, SIGUSR1)))
+				if ((kill(a.pid, SIGUSR1)) == -1)
 					return(-1);
 			j++;
 			usleep(900);
@@ -109,7 +103,15 @@ int	main(int argc, char *argv[])
 		printf("Invalid pid \n");
 		exit(EXIT_FAILURE);
 	}
-	if(!ft_sendsignal(a))
+	if(ft_sendsignal(a) == -1)
 		ft_printf("Pid wrong or Kill function failled");
 	return (0);
 }
+
+
+// 00010000
+// 01100001
+// 01011100
+// 01101010
+
+//11110000 10011111 10100100 10010110

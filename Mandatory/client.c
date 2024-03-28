@@ -6,16 +6,16 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 21:08:06 by mboughra          #+#    #+#             */
-/*   Updated: 2024/03/27 23:46:42 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/03/28 03:18:41 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Minitalk.h"
 
-size_t	ft_atoi(char *str)
+pid_t	ft_atoi(char *str)
 {
-	size_t	i;
-	size_t	r;
+	pid_t	i;
+	pid_t	r;
 
 	r = 0;
 	i = 0;
@@ -26,7 +26,7 @@ size_t	ft_atoi(char *str)
 		r = (r * 10) + (str[i] - 48);
 		i++;
 	}
-	if (r <= 0 || r > 99999)
+	if (r <= 0)
 		return (-1);
 	return (r);
 }

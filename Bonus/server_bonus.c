@@ -6,38 +6,79 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:45:04 by mboughra          #+#    #+#             */
-/*   Updated: 2024/03/27 23:39:28 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/03/28 05:57:11 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Minitalk.h"
 
-void reset(unsigned char *byte, int *bit_count)
+void reset(unsigned char *str, int *i, int *j, int *expected)
 {
-	*byte = 0;
-	*bit_count = 0;
+	int r;
+
+	r = 0;
+	*i = 0;
+	*j = 0;
+	*expected = 0;
+	while (r < 4)
+	{
+		str[r++] = 0;
+	}
+}
+
+int check(unsigned char byte)
+{
+	if (byte >= 240)
+		return(32);
+	else if (byte >= 224)
+		return(24);
+	else if (byte >= 192)
+		return(16);
+	else
+		return (8);
+}
+void iprint(unsigned char *str, int *expected, int *i, int *j)
+{
+	int r;
+	int bytelen = *expected / 8;
+
+	r = 0;
+	while (r < bytelen)
+	{
+		ft_printf("%c",str[r]);
+		r++;
+	}
+	reset(str, i, j, expected);
 }
 
 void	deepersighandle(int signum, siginfo_t *info, void *ptr)
 {
-	static int pid;
-	static unsigned char byte;
-	static int bit_count;
+	static int				pid;
+	static unsigned char	byte[4];
+	static int 				i;
+	static int				j;
+	static int				expected;
 	
 	if (pid != info->si_pid)
 	{
 		pid = info->si_pid;
-		reset(&byte, &bit_count);
+		reset(byte, &i, &j, &expected);
 	}
-	byte = (byte << 1) | (signum - SIGUSR1);
-	bit_count++;
-	if (bit_count == 8)
+	byte[j] = (byte[j] << 1) | (signum - SIGUSR1);
+	i++;
+	if (i == 8)
 	{
-		ft_printf("%c", byte);
-		reset(&byte, &bit_count);
+		i = 0;
+		if (j == 0)
+			expected = check(byte[0]);
+		j++;	
 	}
-}
+	if ((8 * j + i) == expected)
+    {
+        iprint(byte, &expected, &i, &j);
+    }
 
+}
 int	main(void)
 {
 	struct sigaction	sa;

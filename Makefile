@@ -6,7 +6,7 @@
 #    By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/18 21:42:38 by mboughra          #+#    #+#              #
-#    Updated: 2024/03/27 23:38:15 by mboughra         ###   ########.fr        #
+#    Updated: 2024/03/28 00:03:29 by mboughra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ tools/ft_hexafunctions.c tools/ft_putfunctions.c
 RM = rm -rf
 
 all: server client
+bonus: server_bonus client_bonus
 # %.o: %.c
 # 	$(CC) $(CFLAGS) -c $< -o $@
 
@@ -34,30 +35,21 @@ client: Mandatory/client.c tools/ft_printf.c tools/ft_hexafunctions.c \
 		tools/ft_putfunctions.c Minitalk.h
 	$(CC) -o $@ Mandatory/client.c tools/ft_printf.c tools/ft_hexafunctions.c \
 		tools/ft_putfunctions.c $(CFLAGS)
+		
+client_bonus: Bonus/client_bonus.c tools/ft_printf.c tools/ft_hexafunctions.c \
+		tools/ft_putfunctions.c Minitalk.h
+	$(CC) -o $@ Bonus/client_bonus.c tools/ft_printf.c tools/ft_hexafunctions.c \
+		tools/ft_putfunctions.c $(CFLAGS)
+		
+server_bonus: Bonus/server_bonus.c tools/ft_printf.c tools/ft_hexafunctions.c \
+		tools/ft_putfunctions.c Minitalk.h
+	$(CC) -o $@ Bonus/server_bonus.c tools/ft_printf.c tools/ft_hexafunctions.c \
+		tools/ft_putfunctions.c $(CFLAGS)
 
 clean:
 	$(RM) $(OBJ)
 
 fclean: clean
-	$(RM) server client
+	$(RM) server client server_bonus client_bonus
 
 re:	fclean all
-
-
-# CC =  cc
-# CFLAGS = -Wall -Werror -Wextra
-# NAME = server
-# SRCS = ft_hexafunctions.c ft_printf.c ft_putfunctions.c server.c
-# OBJS = $(SRCS:.c=.o)
-# HEADER = Minitalk.h
-# all: $(NAME)
-# %.o: %.c $(HEADER)
-# 	$(CC) -Wall -Wextra -Werror -c $< -o $@
-# $(NAME): $(OBJS)
-# 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
-# clean:
-# 	rm -f $(OBJS)
-# fclean: clean
-# 	rm -f $(NAME)
-# re: fclean all
-# .PHONY: clean

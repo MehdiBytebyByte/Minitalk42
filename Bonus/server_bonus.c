@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:45:04 by mboughra          #+#    #+#             */
-/*   Updated: 2024/03/28 05:57:11 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/03/28 06:28:21 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,8 @@ void	deepersighandle(int signum, siginfo_t *info, void *ptr)
 		j++;	
 	}
 	if ((8 * j + i) == expected)
-    {
         iprint(byte, &expected, &i, &j);
-    }
+	kill(info->si_pid, SIGUSR2);
 
 }
 int	main(void)
@@ -84,7 +83,7 @@ int	main(void)
 	struct sigaction	sa;
 
 	ft_printf("This server PID is ->%d\n", getpid());
-	sa.__sigaction_u.__sa_sigaction = deepersighandle;
+	sa.sa_sigaction = deepersighandle;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
 	sigaction(SIGUSR1, &sa, NULL);

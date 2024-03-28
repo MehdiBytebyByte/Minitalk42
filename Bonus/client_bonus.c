@@ -6,11 +6,18 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 21:08:06 by mboughra          #+#    #+#             */
-/*   Updated: 2024/03/28 00:37:42 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/03/28 06:29:18 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Minitalk.h"
+
+void abc(int i)
+{
+	i++;
+	i--;
+	ft_printf("Signal recieved\n");
+}
 
 size_t	ft_atoi(char *str)
 {
@@ -69,7 +76,6 @@ int	ft_sendsignal(t_struct a)
 	{
 		a = init(a);
 		a.converted = convert(a.av2[i], a.table);
-		printf("%s\n",a.converted);
 		j = 0;
 		while (j < 8)
 		{
@@ -92,11 +98,12 @@ int	main(int argc, char *argv[])
 	t_struct	a;
 
 	a.av2 = argv[2];
+	signal(SIGUSR2, abc);
 	if (argc != 3)
 	{
 		printf("Please Enter 3 arguments");
 		exit(EXIT_FAILURE);
-	}
+	} 
 	a.pid = ft_atoi(argv[1]);
 	if (a.pid == -1)
 	{
@@ -105,6 +112,11 @@ int	main(int argc, char *argv[])
 	}
 	if(ft_sendsignal(a) == -1)
 		ft_printf("Pid wrong or Kill function failled");
+	while (1)
+	{
+		pause();
+	}
+	
 	return (0);
 }
 

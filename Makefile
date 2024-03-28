@@ -6,12 +6,12 @@
 #    By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/18 21:42:38 by mboughra          #+#    #+#              #
-#    Updated: 2024/03/28 00:03:29 by mboughra         ###   ########.fr        #
+#    Updated: 2024/03/28 06:30:41 by mboughra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall
+CFLAGS = -Wall -Wextra -Werror
 
 SRC = Mandatory/server.c Mandatory/client.c tools/ft_printf.c \
 tools/ft_hexafunctions.c tools/ft_putfunctions.c

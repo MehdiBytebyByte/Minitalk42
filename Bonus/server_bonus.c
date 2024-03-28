@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:45:04 by mboughra          #+#    #+#             */
-/*   Updated: 2024/03/28 06:28:21 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/03/28 06:31:52 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	deepersighandle(int signum, siginfo_t *info, void *ptr)
 	static int				j;
 	static int				expected;
 	
+	(void)*ptr;
 	if (pid != info->si_pid)
 	{
 		pid = info->si_pid;
@@ -76,8 +77,8 @@ void	deepersighandle(int signum, siginfo_t *info, void *ptr)
 	if ((8 * j + i) == expected)
         iprint(byte, &expected, &i, &j);
 	kill(info->si_pid, SIGUSR2);
-
 }
+
 int	main(void)
 {
 	struct sigaction	sa;
